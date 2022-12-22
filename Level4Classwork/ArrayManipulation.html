@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="foods.css">
+    <script>
+        function initialize() {
+            outBox = document.getElementById("outbox");
+            foodSelectionBox = document.getElementById("foodsel");
+            duplicatesBox = document.getElementById("dupes");
+            countBox = document.getElementById("count");
+            foodList = ["Pizza", "Hamburger", "Sushi", "Guacamole", "Salmon",
+                "Hamburger", "Guacamole", "Hamburger", "Salmon", "Sushi", "Guacamole",
+                "Guacamole", "Hamburger", "Sushi"]
+            dupesList = [];
+            dupesCount = 0;
+            display();
+        }
+        function display() {
+            outBox.innerHTML = "0: " + foodList[0];
+            for (var i = 1; i < foodList.length; i++) {
+                outBox.innerHTML += "<br />" + i + ": " + foodList[i];
+            }
+            duplicatesBox.innerHTML = dupesList;
+            countBox.innerHTML = dupesCount
+        }
+        function addFood() {
+            foodList.push(foodSelectionBox.value);
+            display();
+        }
+        function countDuplicates(array, item) {
+            var itemCount = 0;
+            for (var i = 0; i < array.length; i++) {
+                if (item === array[i])
+                    itemCount++
+            }
+            return itemCount;
+        }
+        function indexesOf(array, item) {
+            var idxList = [];
+            for (var i = 0; i < array.length; i++) {
+                if (item === array[i])
+                    idxList.push(i);
+            }
+            return idxList;
+        }
+        function getDupeList() {
+            dupesList = indexesOf(foodList, foodSelectionBox.value);
+            display();
+        }
+        function getDupeCount() {
+            dupesCount = countDuplicates(foodList, foodSelectionBox.value);
+            display();
+        }
+    </script>
+</head>
+
+<body onload="initialize();">
+    <h1>Food List</h1>
+
+    <label>
+        Selection:<input type="text" id="foodsel" />
+    </label>
+
+    <hr />
+
+    <button onclick="addFood();">
+        Add Food
+    </button>
+
+    <button onclick="getDupeList();">
+        Find Duplicates
+    </button>
+
+    <button onclick="getDupeCount()">
+        Count Duplicates
+    </button>
+
+    <div>
+        Duplicate Indices: <span id = "dupes"></span>
+    </div>
+
+    <div>
+        Count of Duplicates: <span id = "count"></span>
+    </div>
+
+    <hr />
+
+    <div>
+        <div id = "outbox"></div>
+    </div>
+</body>
+
+</html>
